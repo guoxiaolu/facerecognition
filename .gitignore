@@ -1,3 +1,6 @@
 server/data/
 server/model/
 *.pyc
+.idea/
+server/.idea/
+client/.idea/

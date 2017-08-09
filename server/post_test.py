@@ -5,11 +5,11 @@ import time
 
 
 message_search = { "id" : "weibo_3992350184721547",
-            "pics" : [ {"path":  "/Users/Lavector/facerecognition/data/AfterTheSunSet_002350240_00000068.png", "id" : "b9c7afaf2edda3cc5011dfcd07e93901233f9253"}]
+            "pics" : [ {"path":  "/Users/Lavector/git-back/facerecognition/server/data/AfterTheSunSet_004119160_00000011.png", "id" : "b9c7afaf2edda3cc5011dfcd07e93901233f9253", "consume_history": "True"}]
 }
 
 message_add = { "id" : "weibo_3992350184721547",
-            "pics" : [ {"path": "/Users/Lavector/facerecognition/data/7.png", "id" : "b9c7afaf2edda3cc5011dfcd07e93901233f9254", "consume_history": "True"}]
+            "pics" : [ {"path": "/Users/Lavector/git-back/facerecognition/server/data/7.png", "id" : "b9c7afaf2edda3cc5011dfcd07e93901233f9254", "consume_history": "True"}]
 }
 
 

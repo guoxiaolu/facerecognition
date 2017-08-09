@@ -30,7 +30,7 @@ def get_embedding(img_path):
     feed_dict = {images_placeholder: img, phase_train_placeholder: False}
     emb = sess.run(embeddings, feed_dict=feed_dict)
 
-    return emb
+    return emb.ravel()
 
 # # for test
 # import os
