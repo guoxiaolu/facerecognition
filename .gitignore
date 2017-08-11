@@ -4,3 +4,7 @@ server/model/
 .idea/
 server/.idea/
 client/.idea/
+.DS_Store
+server/.DS_Store
+client/.DS_Store
+server/facerecognition/.DS_Store
