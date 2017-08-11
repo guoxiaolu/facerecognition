@@ -7,7 +7,7 @@ class SignatureES(object):
 
     """
 
-    def __init__(self, es, index='face', doc_type='face', timeout='10s', size=1, distance_cutoff=0.92):
+    def __init__(self, es, index='face', doc_type='face', timeout='10s', size=1, distance_cutoff=0.85):
         """Extra setup for Elasticsearch
 
         Args:
