@@ -42,4 +42,5 @@ def normalized_distance(_a, _b):
 
     """
 
-    return (1.0 - np.dot(_a, _b) / (np.linalg.norm(_a) * np.linalg.norm(_b)))
+    # return (1.0 - np.dot(_a, _b) / (np.linalg.norm(_a) * np.linalg.norm(_b)))
+    return np.dot(_a, _b) / (np.linalg.norm(_a) * np.linalg.norm(_b))

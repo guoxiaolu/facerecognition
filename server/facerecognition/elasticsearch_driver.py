@@ -7,7 +7,7 @@ class SignatureES(object):
 
     """
 
-    def __init__(self, es, index='face', doc_type='face', timeout='10s', size=1, distance_cutoff=0.85):
+    def __init__(self, es, index='face', doc_type='face', timeout='10s', size=1, distance_low=0.5, distance_high = 0.8):
         """Extra setup for Elasticsearch
 
         Args:
@@ -39,7 +39,8 @@ class SignatureES(object):
         self.doc_type = doc_type
         self.timeout = timeout
         self.size = size
-        self.distance_cutoff = distance_cutoff
+        self.distance_low = distance_low
+        self.distance_high = distance_high
 
     def make_record(self, img_path, signature, is_consume, username, facename):
         """Makes a record suitable for database insertion.
@@ -111,7 +112,8 @@ class SignatureES(object):
         search_result = self.search_img(signature, username)
         if len(search_result) != 0:
             result = search_result[0]['_source']['path']
-            if is_consume:
+            score = search_result[0]['_score']
+            if is_consume and score > self.distance_high:
                 self.update_img(search_result[0]['_id'])
         else:
             self.add_img(img_path, signature, is_consume, username, facename)
@@ -140,7 +142,7 @@ class SignatureES(object):
                     }
                 }
             },
-            "min_score" : self.distance_cutoff,
+            "min_score" : self.distance_low,
             "boost_mode":"replace"
         }
         }
