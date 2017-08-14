@@ -74,6 +74,7 @@ def message_for_image_search():
 		if 'pics' in result.keys() and (result['pics'] is not None) and (len(result['pics']) > 0):
 			for each_pic in result['pics']:
 				path = each_pic['path']
+				path_aligned = each_pic['path_aligned']
 				pic_id = each_pic['id']
 				if 'consume_history' in each_pic and each_pic['consume_history'] == 'True':
 					is_consume = True
@@ -82,7 +83,7 @@ def message_for_image_search():
 				print path
 
 				try:
-					result = ses.query(path, is_consume)
+					result = ses.query(path, path_aligned, is_consume)
 					message_query[pic_id] = result
 				except Exception, e:
 					message_query[pic_id] = []

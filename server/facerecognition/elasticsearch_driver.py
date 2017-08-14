@@ -107,15 +107,19 @@ class SignatureES(object):
     def update_img(self, id):
         self.update_single_record(id)
 
-    def query(self, img_path, is_consume=False, username='unknown', facename='unknown'):
-        signature = generate_signature(img_path)
+    def query(self, img_path, aligned_path, is_consume=False, username='unknown', facename='unknown'):
+        signature, signature_aligned = generate_signature(img_path, aligned_path)
         search_result = self.search_img(signature, username)
-        if len(search_result) != 0:
-            result = search_result[0]['_source']['path']
+        search_result_aligned = self.search_img(signature_aligned, username)
+
+        if len(search_result) != 0 and len(search_result_aligned) != 0:
             score = search_result[0]['_score']
             if is_consume and score > self.distance_high:
                 self.update_img(search_result[0]['_id'])
-        else:
+                result = 'consume'
+            else:
+                result = 'come'
+        if len(search_result) == 0 and len(search_result_aligned) == 0:
             self.add_img(img_path, signature, is_consume, username, facename)
             result = 'add'
 

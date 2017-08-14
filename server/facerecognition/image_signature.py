@@ -1,7 +1,7 @@
 import numpy as np
 from feedforward import get_embedding
 
-def generate_signature(img_path):
+def generate_signature(img_path, aligned_path):
     """Generates an image signature.
 
     Args:
@@ -17,7 +17,7 @@ def generate_signature(img_path):
         >>> gis.generate_signature('https://pixabay.com/static/uploads/photo/2012/11/28/08/56/mona-lisa-67506_960_720.jpg')
     """
     try:
-        signature = get_embedding(img_path)
+        signature = get_embedding(img_path, aligned_path)
     except IOError:
         raise TypeError('Cannot predict image successfully.')
     return signature
