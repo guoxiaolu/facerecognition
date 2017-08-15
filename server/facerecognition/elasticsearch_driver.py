@@ -7,7 +7,7 @@ class SignatureES(object):
 
     """
 
-    def __init__(self, es, index='face', doc_type='face', timeout='10s', size=1, distance_low=0.5, distance_high = 0.8):
+    def __init__(self, es, index='face', doc_type='face', timeout='10s', size=1, distance_low=0.3, distance_high = 0.7):
         """Extra setup for Elasticsearch
 
         Args:
@@ -107,18 +107,21 @@ class SignatureES(object):
     def update_img(self, id):
         self.update_single_record(id)
 
-    def query(self, img_path, aligned_path, is_consume=False, username='unknown', facename='unknown'):
-        signature, signature_aligned = generate_signature(img_path, aligned_path)
+    def query(self, img_path, is_consume=False, username='unknown', facename='unknown'):
+        signature, signature_aligned = generate_signature(img_path)
         search_result = self.search_img(signature, username)
         search_result_aligned = self.search_img(signature_aligned, username)
 
+        result = ''
         if len(search_result) != 0 and len(search_result_aligned) != 0:
+        # if len(search_result) != 0:
             score = search_result[0]['_score']
             if is_consume and score > self.distance_high:
                 self.update_img(search_result[0]['_id'])
                 result = 'consume'
             else:
                 result = 'come'
+        # else:
         if len(search_result) == 0 and len(search_result_aligned) == 0:
             self.add_img(img_path, signature, is_consume, username, facename)
             result = 'add'

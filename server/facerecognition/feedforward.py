@@ -4,6 +4,7 @@ from scipy import misc
 import tensorflow as tf
 import facenet
 import numpy as np
+from align_dlib import AlignDlib
 
 with tf.Graph().as_default() as graph:
     with tf.Session() as sess:
@@ -15,6 +16,10 @@ with tf.Graph().as_default() as graph:
         embeddings = graph.get_tensor_by_name("embeddings:0")
         phase_train_placeholder = graph.get_tensor_by_name("phase_train:0")
 
+face_predictor_path = './model/shape_predictor_68_face_landmarks.dat'
+align = AlignDlib(face_predictor_path)
+landmarkIndices = AlignDlib.OUTER_EYES_AND_NOSE
+
 def readimg(img_path):
     img = misc.imread(img_path, mode='RGB')
 
@@ -24,16 +29,26 @@ def readimg(img_path):
 
     return img
 
-def get_embedding(img_path, aligned_path):
-    img = readimg(img_path)
-    aligned_img = readimg(aligned_path)
+def get_embedding(img_path):
+    img = misc.imread(img_path, mode='RGB')
+
+    # judge alignment
+    aligned = align.align(160, img, [0, 0, img.shape[1], img.shape[0]], landmarkIndices=landmarkIndices)
+
+
+    img = facenet.prewhiten(img)
+    img = np.expand_dims(img, axis=0)
+
+    aligned = facenet.prewhiten(aligned)
+    aligned = np.expand_dims(aligned, axis=0)
 
 
     # Run forward pass to calculate embeddings
     feed_dict = {images_placeholder: img, phase_train_placeholder: False}
     emb = sess.run(embeddings, feed_dict=feed_dict)
 
-    feed_dict_aligned = {images_placeholder: aligned_img, phase_train_placeholder: False}
+    # Run forward pass to calculate embeddings
+    feed_dict_aligned = {images_placeholder: aligned, phase_train_placeholder: False}
     emb_aligned = sess.run(embeddings, feed_dict=feed_dict_aligned)
 
     return emb.ravel(), emb_aligned.ravel()
