@@ -116,7 +116,8 @@ class SignatureES(object):
         if len(search_result) != 0 and len(search_result_aligned) != 0:
         # if len(search_result) != 0:
             score = search_result[0]['_score']
-            if is_consume and score > self.distance_high:
+            score_aligned = search_result_aligned[0]['_score']
+            if is_consume and max(score, score_aligned) > self.distance_high:
                 self.update_img(search_result[0]['_id'])
                 result = 'consume'
             else:

@@ -31,7 +31,7 @@ if not es.indices.exists(es_index):
 			}
 		 },
 		 "mappings": {
-			"image" : {
+			"face" : {
 			  "properties" : {
 				  "signature": {
 							  "type": "text",
