@@ -16,7 +16,7 @@ from sftp_upload import sftp_upload
 output_dir = '/Users/Lavector/git-back/facerecognition/client/my_faces'
 size = 160
 
-host = '121.69.75.194'  # 主test
+host = '121.69.75.194'  # 
 port = 22  # 端口
 username = 'wac'  # 用户名
 password = '8112whz'  # 密码
