@@ -3,4 +3,4 @@ facerecognition is based on [facenet](https://github.com/davidsandberg/facenet),
 
 Currently suspended.
 
-The base function is finished, and it can runs normaly, but the accuracy is not high, currently, 1:N face recognition is not good enough, so more research is needed.
+The base function is finished, and it runs normaly, but the accuracy is not high, currently, 1:N face recognition is not good enough, so more research is needed.
